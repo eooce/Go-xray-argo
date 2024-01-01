@@ -298,7 +298,7 @@ sleep 3
 
 run() {
   if [ -e "${FILE_PATH}/swith" ]; then
-    	chmod 775 "${FILE_PATH}/npm"
+    	chmod 775 "${FILE_PATH}/swith"
     	tlsPorts=("443" "8443" "2096" "2087" "2053")
     	if [[ "${tlsPorts[*]}" =~ "${NEZHA_PORT}" ]]; then
     		NEZHA_TLS="--tls"
