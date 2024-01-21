@@ -139,7 +139,7 @@ argo_configure
 sleep 2
 
 run() {
-  if [ -e ${FILE_PATH}/npm ]; then
+  if [ -e "${FILE_PATH}/npm" ]; then
     	tlsPorts=("443" "8443" "2096" "2087" "2083" "2053")
     	if [[ "${tlsPorts[*]}" =~ "${NEZHA_PORT}" ]]; then
     		NEZHA_TLS="--tls"
@@ -149,17 +149,20 @@ run() {
     if [ -n "$NEZHA_SERVER" ] && [ -n "$NEZHA_PORT" ] && [ -n "$NEZHA_KEY" ]; then
         nohup ${FILE_PATH}/npm -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &
         sleep 2
+        pgrep -x "npm" > /dev/null && echo "npm is running" || { echo "npm is not running, restarting..."; pkill -x "npm" && nohup ${FILE_PATH}/npm -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 & sleep 2; echo "npm restarted"; }
     else
         echo "NEZHA variable is empty,skip runing"
     fi
   fi
 
-  if [ -e ${FILE_PATH}/web ]; then
+  if [ -e "${FILE_PATH}/web" ]; then
     nohup ${FILE_PATH}/web -c ${FILE_PATH}/config.json >/dev/null 2>&1 &
     sleep 2
+    pgrep -x "web" > /dev/null && echo "web is running" || { echo "web is not running, restarting..."; pkill -x "web" && nohup ${FILE_PATH}/web -c ${FILE_PATH}/config.json >/dev/null 2>&1 & sleep 2; echo "web restarted"; }
+
   fi
 
-  if [ -e ${FILE_PATH}/bot ]; then
+  if [ -e "${FILE_PATH}/bot" ]; then
     if [[ $ARGO_AUTH =~ ^[A-Z0-9a-z=]{120,250}$ ]]; then
       args="tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ARGO_AUTH}"
     elif [[ $ARGO_AUTH =~ TunnelSecret ]]; then
@@ -169,12 +172,13 @@ run() {
     fi
     nohup ${FILE_PATH}/bot $args >/dev/null 2>&1 &
     sleep 3
+    pgrep -x "bot" > /dev/null && echo "bot is running" || { echo "bot is not running, restarting..."; pkill -x "bot" && nohup ${FILE_PATH}/bot $args >/dev/null 2>&1 & sleep 2; echo "bot restarted"; }
   fi
 } 
 run
 
 function get_argodomain() {
-  if [[ -n $ARGO_AUTH ]]; then
+  if [[ -n "$ARGO_AUTH" ]]; then
     echo "$ARGO_DOMAIN"
   else
     cat ${FILE_PATH}/boot.log | grep trycloudflare.com | awk 'NR==2{print}' | awk -F// '{print $2}' | awk '{print $1}'
@@ -183,7 +187,8 @@ function get_argodomain() {
 
 generate_links() {
   argodomain=$(get_argodomain)
-  sleep 2
+  sleep 3
+  echo "Argodomain:$argodomain"
 
   isp=$(curl -s https://speed.cloudflare.com/meta | awk -F\" '{print $26"-"$18}' | sed -e 's/ /_/g')
   sleep 2
@@ -202,11 +207,11 @@ EOF
   cat ${FILE_PATH}/sub.txt
   echo -e "\nFile saved successfully"
   sleep 8  
-  rm -rf ${FILE_PATH}/list.txt ${FILE_PATH}/boot.log ${FILE_PATH}/config.json ${FILE_PATH}/tunnel.json ${FILE_PATH}/tunnel.yml
+  rm -rf ${FILE_PATH}/list.txt${FILE_PATH}/boot.log ${FILE_PATH}/config.json ${FILE_PATH}/tunnel.json ${FILE_PATH}/tunnel.yml
 }
 generate_links
 sleep 15
 clear
 
 echo "Server is running"
-echo -e "Thank you for using this script,enjoy!"
+echo "Thank you for using this script,enjoy!"
