@@ -1,8 +1,8 @@
 #!/bin/bash
 export UUID=${UUID:-'92880617-c2f5-4c16-b1cb-68ccde9a1c1b'}
-export NEZHA_SERVER=${NEZHA_SERVER:-'nz.f4i.com'}
+export NEZHA_SERVER=${NEZHA_SERVER:-'nz.abcd.com'}
 export NEZHA_PORT=${NEZHA_PORT:-'5555'}   # 哪吒端口为{443,8443,2096,2087,2083,2053}其中之一时开启tls
-export NEZHA_KEY=${NEZHA_KEY:-'wOij9z8Aj2GCrK3UFl'}        # 哪吒三个变量不全不运行
+export NEZHA_KEY=${NEZHA_KEY:-''}        # 哪吒三个变量不全不运行
 export ARGO_DOMAIN=${ARGO_DOMAIN:-''}
 export ARGO_AUTH=${ARGO_AUTH:-''}
 export NAME=${NAME:-'Vls'}
