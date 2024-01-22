@@ -1,12 +1,12 @@
 FROM golang:1.20-alpine
 
-COPY go.mod ./app
+WORKDIR /app
+
+COPY go.mod ./
 
 RUN go mod download
 
-WORKDIR /app
-
-COPY . .
+COPY main.go start.sh ./app
 
 RUN apk update &&\
     apk --no-cache add openssl curl gcompat iproute2 coreutils &&\
