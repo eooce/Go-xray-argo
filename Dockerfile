@@ -6,10 +6,11 @@ COPY go.mod ./
 
 RUN go mod download
 
-COPY main.go start.sh ./app
+COPY . .
 
 RUN apk update &&\
-    apk --no-cache add openssl curl gcompat iproute2 coreutils &&\
+    apk add --no-cache openssl curl gcompat iproute2 &&\
+    chmod +x main.go start.sh &&\
     go build -o app main.go
 
 CMD ["./app"]
