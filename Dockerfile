@@ -1,5 +1,9 @@
 FROM golang:1.20-alpine
 
+COPY go.mod ./app
+
+RUN go mod download
+
 WORKDIR /app
 
 COPY . .
