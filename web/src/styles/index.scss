@@ -1,0 +1,128 @@
+@import './normalize.scss';
+@import './element-ui.scss';
+
+:root {
+  --bg-color: #f5f7fa;
+  --card-bg: #fff;
+  --text-color: #222;
+  --primary: #409eff;
+  --success: #21c87a;
+  --input-bg: #f5f7fa;
+  --input-border: #dcdfe6;
+  --shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+}
+
+.dark-theme {
+  --bg-color: #181c24;
+  --card-bg: #232a34;
+  --text-color: #e6e6e6;
+  --primary: #409eff;
+  --success: #21c87a;
+  --input-bg: #232a34;
+  --input-border: #333;
+  --shadow: 0 4px 24px 0 rgba(0,0,0,0.32);
+}
+
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+// main-container global css
+.app-container {
+  padding: 20px;
+}
+
+.xterm {
+  height: 100%;
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.42);
+    box-shadow: inset 0 0 2px rgba(0,0,0,.42);
+    background-color: rgba(46,80,133,.6);
+    &:hover {
+      background-color: rgba(46,80,133,1);
+    }
+  }
+
+  ::-webkit-scrollbar {
+      /*滚动条整体部分，其中的属性有width,height,background,border等*/
+      width: 6px;
+      height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+      box-shadow: inset 0 0 2px rgba(0,0,0,.3);
+      border-radius: 10px;
+  }
+}
+
+.card {
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  padding: 40px 32px;
+  max-width: 800px;
+  margin: 60px auto;
+}
+
+input, .el-input__inner {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
+}
